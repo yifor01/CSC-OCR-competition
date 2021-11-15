@@ -43,7 +43,7 @@
         ![](./fig/math.png)
         
     * code
-    ```
+    ```python
     import numpy as np
     from Levenshtein import distance
 
