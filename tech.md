@@ -12,27 +12,26 @@
         * single bounding box (with 4 points)
         * recognition results
     * data preview
-        ![](./fig/preview.png)
+        * ![](./fig/preview.png)
     * special noise
         * double vision
-            ![](./fig/noise1.png)
+            * ![](./fig/noise1.png)
         * vertical line
-            ![](./fig/noise2.png)
+            * ![](./fig/noise2.png)
         * hand write
-            ![](./fig/noise3.png)
-            ![](./fig/noise4.png)
+            * ![](./fig/noise3.png)
+            * ![](./fig/noise4.png)
         * incomplete letters
-            ![](./fig/noise5.png)
+            * ![](./fig/noise5.png)
         * noise
-            ![](./fig/noise6.png)
-            
+            * ![](./fig/noise6.png)
 ## Metric
 * Score function
     * function
         $$score=\sum_{i=1}^{N}I(pred\ str_i=true\ str_i)+\frac{1}{N}\sum_{i=1}^{N}\frac{lev(pred\ str_i,true\ str_i)}{\max(|pred\ str_i|,|true\ str_i| )}$$
         
     * code
-    ```python
+    ```
     import numpy as np
     from Levenshtein import distance
 
@@ -64,9 +63,9 @@
         * Step 1
             * mix background and word (package: [trdg](https://github.com/Belval/TextRecognitionDataGenerator))
             * Example 1
-            ![](./fig/fake1.png)
+               * ![](./fig/fake1.png)
             * Example 2
-            ![](./fig/fake2.png)
+                * ![](./fig/fake2.png)
         * Step 2
             * add noise
                 * noise feature
@@ -76,9 +75,9 @@
                     * hand write
             * Example
                 * Example 1 (double vision)
-                ![](./fig/fake3.png)
+                  * ![](./fig/fake3.png)
                 * Example 2 (csc font)
-                ![](./fig/fake4.png)
+                  * ![](./fig/fake4.png)
     * detection part
         * Step 1
             * Hollowing out the bounding box for the original figure.
@@ -86,9 +85,9 @@
             * Fill in the fake image of the recognition task to detect the background image.
             * Example
                 * Example 1
-                ![](./fig/fake5.png)
+                  * ![](./fig/fake5.png)
                 * Example 2
-                ![](./fig/fake6.png)
+                  * ![](./fig/fake6.png)
 
 # Modeling
 ## Framework
@@ -121,21 +120,21 @@
 * Problem & Solution
     * Issue Figure
         * Figure 1 
-            ![](./fig/issue1.png)
+            * ![](./fig/issue1.png)
             * Problem
                 * Multiple bounding box - uncorrect
         * Figure 2
-            ![](./fig/issue2.png)
+            * ![](./fig/issue2.png)
             * Problem
                 * Multiple bounding box - correct
     * Solution
         * Solution 1 : merge all bounding box 
-            ![](./fig/sol1.png)
+            * ![](./fig/sol1.png)
             * Problem: Oversized bounding box
         * Solution 2 : check if each border has characters then merge
-            ![](./fig/sol2.png)
+            * ![](./fig/sol2.png)
         * Solution 3 : Find the y-axis coordinates located at the lower part of the picture and estimate the reasonable y-axis range. 
-            ![](./fig/sol3.png)
+            * ![](./fig/sol3.png)
 
 ## Recognition Model
 * Image augmentation
@@ -189,7 +188,7 @@
 ## End2end Prediction
 * Detection predict module 1 
     * pipeline
-    ![](./fig/det1.png)
+      * ![](./fig/det1.png)
     * Pros
         * Using different models can complement the advantages of prediction.
             * MobileNetV3 + DB: The prediction region is a bit sensitive and more susceptible to noise.
@@ -198,7 +197,7 @@
         * Oversized bounding box and low confidence of recognition results.
 * Detection predict module 2
     * Pipeline
-    ![](./fig/det2.png)
+      * ![](./fig/det2.png)
     * Pros
         * Using different models can complement the advantages of prediction.
         * Fix `Detection module 1` oversized bounding box problem.
@@ -206,11 +205,11 @@
     * Cons
         * Cost too much time
     * Sample
-        ![](./fig/det3.png)
+        * ![](./fig/det3.png)
 
 * Image augmentation
     * Pipeline
-        ![](./fig/ia1.png)
+        * ![](./fig/ia1.png)
     * Pros
         * Enhance the confidence of recognition results.
     * Cons
@@ -218,16 +217,16 @@
         * May lead to overfitting problem.
     * Sample
         * Original
-        ![](./fig/sam1.png)
+           * ![](./fig/sam1.png)
         * Rotate 180
-        ![](./fig/sam2.png)
+           * ![](./fig/sam2.png)
         * Blur
-        ![](./fig/sam3.png)
+           * ![](./fig/sam3.png)
         * Contrast
-        ![](./fig/sam4.png)
+           * ![](./fig/sam4.png)
 * Recognition predict module
     * Pipeline
-    ![](./fig/rec1.png)
+      * ![](./fig/rec1.png)
     * Pros
         * Enhance the confidence of recognition results.
     * Cons
