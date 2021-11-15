@@ -3,7 +3,7 @@
 
 # 比賽資訊
 * [Tbrain比賽網站/CSC比賽資料](https://tbrain.trendmicro.com.tw/Competitions/Details/17)
-* [TB2 技術文件](https://github.com/yifor01/CSC-OCR-competition/tech.md)
+* [TB2 技術文件](./tech.md)
 
 
 # 比賽結果
