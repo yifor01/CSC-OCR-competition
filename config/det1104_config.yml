@@ -1,0 +1,121 @@
+Global:
+  debug: false
+  use_gpu: true
+  epoch_num: 10000
+  log_smooth_window: 20
+  print_batch_step: 2
+  save_model_dir: ./output/yi_east_r50_vd_csc_1101/
+  save_epoch_step: 1000
+  eval_batch_step:
+  - 4000
+  - 5000
+  cal_metric_during_train: false
+  pretrained_model: null
+  checkpoints: null
+  save_inference_dir: null
+  use_visualdl: false
+  infer_img: null
+  save_res_path: null
+  distributed: true
+Architecture:
+  model_type: det
+  algorithm: EAST
+  Transform: null
+  Backbone:
+    name: ResNet
+    layers: 50
+  Neck:
+    name: EASTFPN
+    model_name: large
+  Head:
+    name: EASTHead
+    model_name: large
+Loss:
+  name: EASTLoss
+Optimizer:
+  name: Adam
+  beta1: 0.9
+  beta2: 0.999
+  lr:
+    learning_rate: 0.001
+  regularizer:
+    name: L2
+    factor: 0
+PostProcess:
+  name: EASTPostProcess
+  score_thresh: 0.7
+  cover_thresh: 0.1
+  nms_thresh: 0.2
+Metric:
+  name: DetMetric
+  main_indicator: hmean
+Train:
+  dataset:
+    name: SimpleDataSet
+    data_dir: /workspace/PaddleOCR/dataset/public_training_data/public_training_data
+    label_file_list:
+    - /workspace/PaddleOCR/dataset/train_det_label.txt
+    ratio_list:
+    - 1.0
+    transforms:
+    - DecodeImage:
+        img_mode: BGR
+        channel_first: false
+    - DetLabelEncode: null
+    - EASTProcessTrain:
+        image_shape:
+        - 512
+        - 512
+        background_ratio: 0.125
+        min_crop_side_ratio: 0.1
+        min_text_size: 15
+    - KeepKeys:
+        keep_keys:
+        - image
+        - score_map
+        - geo_map
+        - training_mask
+  loader:
+    shuffle: true
+    drop_last: false
+    batch_size_per_card: 16
+    num_workers: 1
+    use_shared_memory: false
+Eval:
+  dataset:
+    name: SimpleDataSet
+    data_dir: /workspace/PaddleOCR/dataset/public_training_data/public_training_data
+    label_file_list:
+    - /workspace/PaddleOCR/dataset/test_det_label.txt
+    transforms:
+    - DecodeImage:
+        img_mode: BGR
+        channel_first: false
+    - DetLabelEncode: null
+    - DetResizeForTest:
+        limit_side_len: 2400
+        limit_type: max
+    - NormalizeImage:
+        scale: 1./255.
+        mean:
+        - 0.485
+        - 0.456
+        - 0.406
+        std:
+        - 0.229
+        - 0.224
+        - 0.225
+        order: hwc
+    - ToCHWImage: null
+    - KeepKeys:
+        keep_keys:
+        - image
+        - shape
+        - polys
+        - ignore_tags
+  loader:
+    shuffle: false
+    drop_last: false
+    batch_size_per_card: 1
+    num_workers: 4
+    use_shared_memory: false
