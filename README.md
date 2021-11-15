@@ -9,7 +9,7 @@
 # 比賽結果
 * Team : **TB2**
 * Public LB: No.2
-    * Score: 44 (Acc 約98.53%)
+    * Score: 44 (Acc 約 98.53%)
 * Private LB: No.8 
     * Score: 128 (Acc 約 98.71%)
 
@@ -18,7 +18,7 @@
     - 先行安裝符合運行條件的 [`PaddleOCR`](https://github.com/PaddlePaddle/PaddleOCR) 相關之套件
     - 將`PaddleOCR`源碼放入此資料夾前一層
     - 將比賽檔案放入`data`資料夾
-    - 執行 `pip install -U requirements.txt`
+    - 安裝必要套件，執行 `pip install -U requirements.txt`
 - 假資料生成
     - 偵測任務
         - 執行 `./fake_generate/det_fake.ipynb`
