@@ -79,6 +79,7 @@
                 ![](./fig/fake1.png)
                 
             * Example 2
+            
                 ![](./fig/fake2.png)
                  
         * Step 2
